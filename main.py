@@ -5,8 +5,8 @@ import os
 
 def rename_single_pdf(file_name, dir_name):
     pdf_file = open(file_name, "rb")
-    pdf_reader = PyPDF2.PdfFileReader(pdf_file)
-    title = pdf_reader.getDocumentInfo().title
+    pdf_reader = PyPDF2.PdfReader(pdf_file)
+    title = pdf_reader.metadata.title
 
     if title:
         print("Renaming with the title")
@@ -14,7 +14,7 @@ def rename_single_pdf(file_name, dir_name):
 
     else:
         print("Title not found, renaming with the first line")
-        first_page_text = pdf_reader.getPage(0).extractText()
+        first_page_text = pdf_reader.pages[0].extract_text()
         first_line = first_page_text.split("\n")[0]
         new_file_name = first_line
 
